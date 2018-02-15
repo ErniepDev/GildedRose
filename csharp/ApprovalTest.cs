@@ -1,17 +1,17 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
-using NUnit.Framework;
 using System;
 using System.IO;
 using System.Text;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace csharp
 {
-    [TestFixture]
+    [TestClass]
     [UseReporter(typeof(NUnitReporter))]
     public class ApprovalTest
     {
-        [Test]
+        [TestMethod]
         public void ThirtyDays()
         {
             StringBuilder fakeoutput = new StringBuilder();
