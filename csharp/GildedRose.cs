@@ -4,86 +4,124 @@ namespace csharp
 {
     public class GildedRose
     {
-        IList<Item> Items;
-        public GildedRose(IList<Item> Items)
+        readonly IList<Item> _items;
+
+        public GildedRose(IList<Item> items)
         {
-            this.Items = Items;
+            _items = items;
         }
 
         public void UpdateQuality()
         {
-            for (var i = 0; i < Items.Count; i++)
+            foreach (Item item in _items)
             {
-                if (Items[i].Name != "Aged Brie" && Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
+                if (IsStandardItem(item.Name))
                 {
-                    if (Items[i].Quality > 0)
+                    if (item.Quality > 0)
                     {
-                        if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
-                        {
-                            Items[i].Quality = Items[i].Quality - 1;
-                        }
-                    }
-                }
-                else
-                {
-                    if (Items[i].Quality < 50)
-                    {
-                        Items[i].Quality = Items[i].Quality + 1;
-
-                        if (Items[i].Name == "Backstage passes to a TAFKAL80ETC concert")
-                        {
-                            if (Items[i].SellIn < 11)
-                            {
-                                if (Items[i].Quality < 50)
-                                {
-                                    Items[i].Quality = Items[i].Quality + 1;
-                                }
-                            }
-
-                            if (Items[i].SellIn < 6)
-                            {
-                                if (Items[i].Quality < 50)
-                                {
-                                    Items[i].Quality = Items[i].Quality + 1;
-                                }
-                            }
-                        }
+                        DecrementItemQuality(item, 1);
                     }
                 }
 
-                if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
+                if (IsAgedItem(item.Name) && IsLessThanMaxItemQuality(item.Quality))
                 {
-                    Items[i].SellIn = Items[i].SellIn - 1;
+                    IncrementIteQuality(item, 1);
                 }
 
-                if (Items[i].SellIn < 0)
-                {
-                    if (Items[i].Name != "Aged Brie")
+                
+
+                    if (IsConcertTicket(item.Name) && IsLessThanMaxItemQuality(item.Quality))
                     {
-                        if (Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
+                        IncrementIteQuality(item, 1);
+
+                        if (item.Name == "Backstage passes to a TAFKAL80ETC concert" && IsLessThanMaxItemQuality(item.Quality))
                         {
-                            if (Items[i].Quality > 0)
+                            if (item.SellIn < 11)
                             {
-                                if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
+     
+                                    IncrementIteQuality(item, 1);
+                                
+                            }
+
+                            if (item.SellIn < 6)
+                            {
+                  
+                                    IncrementIteQuality(item, 1);
+                                
+                            }
+                        }
+                    }
+ 
+
+                if (item.Name != "Sulfuras, Hand of Ragnaros")
+                {
+                    item.SellIn = item.SellIn - 1;
+                }
+
+                if (item.SellIn < 0)
+                {
+                    if (item.Name != "Aged Brie")
+                    {
+                        if (item.Name != "Backstage passes to a TAFKAL80ETC concert")
+                        {
+                            if (item.Quality > 0)
+                            {
+                                if (item.Name != "Sulfuras, Hand of Ragnaros")
                                 {
-                                    Items[i].Quality = Items[i].Quality - 1;
+                                    DecrementItemQuality(item, 1);
                                 }
                             }
                         }
                         else
                         {
-                            Items[i].Quality = Items[i].Quality - Items[i].Quality;
+                            item.Quality = item.Quality - item.Quality;
                         }
                     }
                     else
                     {
-                        if (Items[i].Quality < 50)
+                        if (item.Quality < 50)
                         {
-                            Items[i].Quality = Items[i].Quality + 1;
+                            IncrementIteQuality(item, 1);
                         }
                     }
                 }
             }
+        }
+
+        private bool IsConcertTicket(string itemName)
+        {
+            return itemName == "Backstage passes to a TAFKAL80ETC concert";
+        }
+
+        private bool IsAgedItem(string itemName)
+        {
+            return itemName == "Aged Brie";
+        }
+
+        private bool IsStandardItem(string itemName)
+        {
+            return itemName != "Aged Brie" && itemName != "Backstage passes to a TAFKAL80ETC concert" &&
+                   itemName != "Sulfuras, Hand of Ragnaros";
+        }
+
+        private void IncrementIteQuality(Item item, int incrementAmount)
+        {
+            UpdateItemQuality(item, incrementAmount);
+        }
+
+        private void DecrementItemQuality(Item item, int decrementAmount)
+        {
+            UpdateItemQuality(item, -decrementAmount);
+        }
+
+        private void UpdateItemQuality(Item item, int qualityChangeAmount)
+        {
+            item.Quality += qualityChangeAmount;
+        }
+
+        private bool IsLessThanMaxItemQuality(int itemQuality)
+        {
+            return itemQuality < 50;
         }
     }
 }
