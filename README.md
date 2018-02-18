@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Gilded Rose Refactoring Kata
 
 This Kata was originally created by Terry Hughes (http://twitter.com/#!/TerryHughes). It is already on GitHub [here](https://github.com/NotMyself/GildedRose). See also [Bobby Johnson's description of the kata](http://iamnotmyself.com/2011/02/13/refactor-this-the-gilded-rose-kata/).
@@ -47,3 +48,7 @@ I've also set this kata up on [cyber-dojo](http://cyber-dojo.org) for several la
 I analysed this repo according to the clean code standards on [Better Code Hub](https://bettercodehub.com) just to get an independent opinion of how bad the code is. Perhaps unsurprisingly, the compliance score is low!
 
 [![BCH compliance](https://bettercodehub.com/edge/badge/emilybache/GildedRose-Refactoring-Kata?branch=master)](https://bettercodehub.com/) 
+=======
+# GildedRose
+Gilded Rose Refactoring Kata
+>>>>>>> refs/remotes/origin/master
